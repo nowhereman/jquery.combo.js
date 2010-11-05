@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
+  <head>
+    <title>Comb'O jQuery plugin</title>
+  </head>
+  <body>
+    <h1>Comb'O jQuery plugin</h1>
+    <h2>Introduction</h2>
+    <p>
+    <a href="http://github.com/nowhereman/jquery.combo.js">Comb'O</a> is a <a href="http://jquery.com">jQuery</a> plugin that allows you to turn default browser selectboxes into much more attractive and usable comboboxes. The user can choose whether to select option from the dropdown list or just type it. This widget reaches its maximum efficiency when we have selectboxes with lots of options (e.g. countries or states), so it would be difficult for users to find option in the huge list.
+    </p>
+    <p>
+    This plugin is a fork on <i>steroid</i> of <a href="http://code.google.com/p/sexy-combo">Sexy Combo</a> plugin <small>(version 2.0.6)</small> which is discontinued.<br />
+    The name of the plugin was changed to be more <i>corporate</i> friendly.
+    </p>
+    <p>
+    The plugin is usable not only for end users, but also for developers. Comb'O has a lot of configuration options so you can modify its behaviour and appearance. The core CSS file is separated from the CSS that provides combo's appearance, so you are able to easily create new skins for the plugin.
+    </p>
+    <h2>Examples</h2>
+    <p>
+    Please view <a href="examples/index.html">demo page</a> to see the possibilities of <em>Comb'O</em>.
+    </p>
+    <h2>Installation</h2>
+    <p>
+    Please follow these instructions to install Comb'O:
+    <ol>
+        <li><a href="https://github.com/nowhereman/jquery.combo.js/archives/master">Download</a> the last version and unpack the archive.</li>
+    <li>
+    Include jQuery and plugin files to your web page: <br />
+    <code><pre>
+    &lt;script type="text/javascript" src="path_to_plugin/lib/jquery-1.4.3.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="path_to_plugin/lib/jquery.eventdelay.js"&gt;&lt;/script&gt;    
+    &lt;script type="text/javascript" src="path_to_plugin/lib/jquery.combo.js"&gt;&lt;/script&gt;
+    </pre></code>
+    </li>
+    <li>
+        Include core and skin CSS files to your page:<br />
+        <code><pre>
+        &lt;link rel="stylesheet" type="text/css" href="path_to_plugin/lib/combo.css" /&gt;
+        &lt;link rel="stylesheet" type="text/css" href="path_to_plugin/skins/skin_name/skin_name.css" /&gt;
+        </pre></code>
+    
+    </li>
+    <li>
+    Done! Now make your selectboxes look and behave sexy!
+    <code><pre>
+    $("select").combo();
+    </pre></code>
+    </li>
+    </ol>
+    </p>
+    <h2>Usage and configuration options</h2>
+    <p>
+    <em>Comb'O</em> has a number of configuration options that are passed to the plugin in the form of JavaScript object, e.g. <code>$("select").combo({triggerSelected: true});</code>. The full list of options is:
+    </p>
+    <ul>
+      <li>
+      <code>(string) skin</code> - name of the skin that will be applied to the combobox. Default is "default"
+      </li>
+      <li>
+      <code>(string) suffix</code> - this option allows you to configure text input's name. The suffix will be appended to the name of the selectbox. Default is "__combo".
+      </li>
+      <li>
+      <code>(string) hiddenSuffix</code> - the same as previous, but for the hidden input. Default is "__comboHidden".
+      </li>
+      <li>
+      <code>(string) initialHiddenValue</code> - the initial value of the hidden input of the combo. Default is "" (empty string).
+      </li>
+      <li>
+      <code>(string) emptyText</code> - if provided, will be shown when an empty text input has no focus.
+      </li>
+      <li>
+      <code>(bool) autoFill</code> - if true, user's input will be autofilled with the value of the first item of the dropdown list. Default is false.
+      </li>
+      <li>
+      <code>(bool) triggerSelected</code> - if true, the selected option of the selectbox will become the initial value of the combo. Default is false.
+      </li>
+      <li>
+      <code>(function) filterFn</code> - a filter function that determines which options should be in the dropdown list.  This function takes two parameters - current text input value and dropdown list item's value, and should return true if item should be in the dropdown list, otherwise false. Default is null.
+      </li>
+      <!--new-->
+      <li>
+      <code>(function) initCallback</code> - function that is called at the end of constrictor. Default is null.
+      </li>
+      <li>
+      <code>(function) initEventsCallback</code> - function that is called at the end of initEvents method. Default is null.
+      </li>
+      <li>
+      <code>(function) showListCallback</code> - function that is called when the dropdown list appears. Default is null.
+      </li>
+      <li>
+      <code>(function) hideListCallback</code> - function that is called when the dropdown list disappears. Default is null.
+      </li>
+      <li>
+      <code>(function) changeCallback</code> - function that is called when both text and hidden inputs values are changed. Default is null.
+      </li>
+      <li>
+      <code>(function) textChangeCallback</code> - function that is called when text input's value is changed. Default is null.
+      </li>
+      <!--end new-->
+    </ul>
+    <!--new-->
+    <p>
+    Note that all callback functions are called in the scope of <code>combo</code> instance, so you have access to all of its methods / properties.
+    </p>
+    <!--end new-->
+    <p>
+    It is possible to create multiple comboboxes from which users can choose more than one option. All you need is to set "multiple" attribute of your selectbox to true, or set <code>multiple</code> config option to true if you create combo without selectbox. Currently this option does not work with <code>autoFill</code> config option. It will be fixed in one of the futute releases.
+    </p>
+    <p>
+
+    </p>
+    <p>
+    You are also able to create combos without using  existing selectboxes. If you want to do this, you should use static method of <code>jQuery.combo</code> object named <code>create</code>, for example: <br />
+      <code><pre>
+      $.combo.create({
+          id : "id",
+      name: "name",
+      container: "#container",
+      data: [
+          {value: "1", text: "First option", selected: true},
+          {value: "2", text: "Second option"},
+          {value: "3", text: "Third option"}
+      ]
+      });
+      </pre></code>
+    </p>
+    <p>
+    Below is the list of configuration options for static creating of comboboxes. You can pass them to the <code>create</code> method together with options we have discussed above.
+    </p>
+    <ul>
+        <li><code>(string) name</code> - the name of the selectbox that will be created. Optional. Default is "" (empty string).</li>
+        <li><code>(string) id</code> - the id of the selectbox that will be created. Optional. Default is "" (empty string)</li>
+        <li><code>(mixed) container</code> - jQuery selector, jQuery object or DOM element that will hold the widget. Optional. Default is <code>$(document)</code>.</li>
+        <li><code>(array) data</code> - data that contains information about combo's options. This is an array of objects, which should have three properties - <code>value</code>(value of the option) and <code>text</code>(text that is displayed for this option) and (optionally) <code>selected</code> (if set to true, option's "selected" attribute will be set to true. Makes sence only with <code>triggerSelected</code> config option set to true). This option is required.</li>
+        <li>
+        <code>(string) url</code> - the URL of JSON object that contains data for combo's options. Object's format is the same as for <code>data</code> option. If specified, <code>data</code> option will be ignored.
+        </li>
+        <li>
+        <code>(object) ajaxData</code> - data that will be passed to AJAX request.
+        </li>
+        <li>
+        <code>(bool) multiple</code> - if true, the combobox will be multiple. Default is false.
+        </li>
+    </ul>
+    <h2>Appearance customization</h2>
+    <p>
+    The core CSS and presentational CSS are separated, so now it's possible to create new skins for <em>Comb'O</em>. The download package contains one example skin. Feel free to create your own based on it.
+    </p>
+    <h2>Browser compatibility</h2>
+    <p>
+    <em>Comb'O</em> has been tested and works on the following browsers:
+    </p>
+    <ul>
+      <li>Internet Explorer 6 (PC)</li>
+      <li>Internet Explorer 7 (PC)</li>
+      <li>Firefox 2 (Linux)</li>
+      <li>Firefox 3 (PC)</li>
+      <li>Firefox 3.6 (PC)</li>
+      <li>Opera 9 (PC)</li>
+      <li>Safari 5 (PC)</li>
+      <li>Chrome 6 (PC)</li>
+    </ul>
+    <h2>Support project</h2>
+    <p>
+    Every user of <em>Comb'O</em> adds some value to it, so you help us by just using it. However, if you want to help more, you can do the following:
+    </p>
+    <ul>
+      <li>
+      Tell the world about <em>Comb'O</em>. You can write an article or a blog post about it or just tell your friends/collegues about it.
+      </li>
+      <li>
+      Test it on browsers that are not currently supported "officially".
+      </li>
+      <li>
+      Report an issue.
+      </li>
+    </ul>
+    <p>
+    Please don't donate money, it's needless.
+    </p>
+    <h2>Resources</h2>
+    <ul>
+      <li><a href="http://github.com/nowhereman/jquery.combo.js">Comb'O</a> on GitHub</li>
+      <!--<li><a href="http://plugins.jquery.com/project/combo">Comb'O</a> in jQuery plugins directory.</li>-->
+    </ul>
+  </body>
+</html>
