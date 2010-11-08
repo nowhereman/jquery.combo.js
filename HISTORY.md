@@ -45,8 +45,8 @@
 *    (-)(P2) ARIA support (see filament group and jARIA plugins)
 *    (-)(P3) Add shortkeys `<CTRL>+<Origin>` and `<CTRL>+<End>` to go at the top or the end of the suggestion list
 *    (-)(P4) `<CTRL>+<Up>` or `<CTRL>+<Down>` move active selection to selected item
-*    (-)(P4) <CTRL>+<Space> when selectBox is in multiple mode, select or unselect current item
-*    (-)(P4) <Shift>+<Origin> or <Shift>+<End> select multiple items, start the selection to the current selected item
+*    (-)(P4) `<CTRL>+<Space>` when selectBox is in multiple mode, select or unselect current item
+*    (-)(P4) `<Shift>+<Origin>` or `<Shift>+<End>` select multiple items, start the selection to the current selected item
 *    (x)(P4) Allowing to update config options outside the plugin when is already create
 *    (-)(P4) Add an option to show/hide drop down button
 *    (-)(P4) Support tabindex (see: [Vladimir's blog post][1])
