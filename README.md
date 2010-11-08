@@ -102,11 +102,11 @@ The core CSS and presentational CSS are separated, so now it's possible to creat
 
 ## Support project
 
-Every user of *Comb'O* adds some value to it, so you help us by just using it. However, if you want to help more, you can do the following:
+Every user of *Comb'O* can add some value to it, so you help us by just using it. However, if you want to help more, you can do the following:
 
 *   Tell the world about *Comb'O*. You can write an article or a blog post about it or just tell your friends/collegues about it.
 *   Test it on browsers that are not currently supported "officially".
-*   Report an issue.
+*   Report an [issue][6].
 
 Please don't donate money, it's needless.
 
@@ -118,4 +118,5 @@ Please don't donate money, it's needless.
  [2]: http://jquery.com
  [3]: http://code.google.com/p/sexy-combo
  [4]: examples/index.html
- [5]: https://github.com/nowhereman/jquery.combo.js/archives/master
+ [5]: http://github.com/nowhereman/jquery.combo.js/archives/master
+ [6]: http://github.com/nowhereman/jquery.combo.js/issues
