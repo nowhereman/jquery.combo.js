@@ -21,16 +21,16 @@ Please follow these instructions to install Comb'O:
 
 2.  Include jQuery and plugin files to your web page:
 
-    `<script type="text/javascript" src="path_to_plugin/lib/jquery-1.4.3.js"></script>`
-    
+    `<script type="text/javascript" src="path_to_plugin/lib/jquery-1.4.4.js"></script>`
+
     `<script type="text/javascript" src="path_to_plugin/lib/jquery.eventdelay.js"></script>`
-    
+
     `<script type="text/javascript" src="path_to_plugin/lib/jquery.combo.js"></script>`
 
 3.  Include core and skin CSS files to your page:
 
     `<link rel="stylesheet" type="text/css" href="path_to_plugin/lib/combo.css" />`
-    
+
     `<link rel="stylesheet" type="text/css" href="path_to_plugin/skins/skin_name/skin_name.css" />`
 
 4.  Done! Now make your selectboxes look and behave sexy! `$("select").combo();`
@@ -120,3 +120,4 @@ Please don't donate money, it's needless.
  [4]: examples/index.html
  [5]: http://github.com/nowhereman/jquery.combo.js/archives/master
  [6]: http://github.com/nowhereman/jquery.combo.js/issues
+
