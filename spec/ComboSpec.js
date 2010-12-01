@@ -19,8 +19,6 @@ describe("Ensure that a select box become a combo box.", function() {
       it("should have an input text", function() {
         input=$('#basic-combo').combo().input;
 
-        expect(input.get(0).tagName.toLowerCase()).toEqual("input");
-        expect(input.get(0).type.toLowerCase()).toEqual("text");
         expect(input).toBe("div.combo input[type=text]");
 
       });
@@ -28,9 +26,8 @@ describe("Ensure that a select box become a combo box.", function() {
       it("should have an hidden container", function() {
         listWrapper=$('#basic-combo').combo().listWrapper;
 
-        expect(listWrapper.get(0).tagName.toLowerCase()).toEqual("div");
         expect(listWrapper).toHaveClass("invisible list-wrapper");
-        expect(listWrapper.get(0).style.display.length).toEqual(0);// to be hidden
+        expect(listWrapper).not.toBeVisible();
         expect(listWrapper).toBe("div.combo div.list-wrapper:first");
 
       });
@@ -40,7 +37,7 @@ describe("Ensure that a select box become a combo box.", function() {
         list=$('#basic-combo').combo().list;
 
         expect(list).toBe("div.combo div.list-wrapper:first ul:first");
-        expect(list.get(0).style.display.length).toEqual(0);// to be hidden
+        expect(list).not.toBeVisible();
       });
 
       it("should have hidden list items inside the unordered list", function() {
@@ -48,7 +45,7 @@ describe("Ensure that a select box become a combo box.", function() {
         listItems=$('#basic-combo').combo().listItems;
 
         expect(listItems).toBe("div.combo div.list-wrapper:first ul:first li");
-        expect(listItems.get(0).style.display.length).toEqual(0);// to be hidden
+        expect(listItems).not.toBeVisible();
       });
 
     });
