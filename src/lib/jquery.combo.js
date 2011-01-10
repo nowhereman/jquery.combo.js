@@ -1127,7 +1127,7 @@
             if (!this.config.emptyText || !this.config.emptyText.length)
                 return;
 
-            //TODO move this events in iniEvents function ?
+            //TODO move this events in initEvents function ?
             var self = this;
             this.input.bind("focus", function() {
                 self.inputFocus();
@@ -1384,3 +1384,4 @@
         }
     });
 })(jQuery);
+
