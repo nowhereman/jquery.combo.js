@@ -117,7 +117,7 @@ Please don't donate money, it's needless.
  [1]: http://github.com/nowhereman/jquery.combo.js
  [2]: http://jquery.com
  [3]: http://code.google.com/p/sexy-combo
- [4]: examples/index.html
+ [4]: http://github.com/nowhereman/jquery.combo.js/examples/index.html
  [5]: http://github.com/nowhereman/jquery.combo.js/archives/master
  [6]: http://github.com/nowhereman/jquery.combo.js/issues
 
