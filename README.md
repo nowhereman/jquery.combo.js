@@ -10,8 +10,8 @@ The name of the plugin was changed to be more *corporate* friendly.
 The plugin is usable not only for end users, but also for developers. Comb'O has a lot of configuration options so you can modify its behaviour and appearance. The core CSS file is separated from the CSS that provides combo's appearance, so you are able to easily create new skins for the plugin.
 
 ## Examples
-
-Please view [demo page][4] to see the possibilities of *Comb'O*.
+[Clone][4] or [download][5] the last version and unpack the archive.
+Then open the file `examples/index.html` in your web browser to see the possibilities of *Comb'O*.
 
 ## Installation
 
@@ -117,7 +117,7 @@ Please don't donate money, it's needless.
  [1]: http://github.com/nowhereman/jquery.combo.js
  [2]: http://jquery.com
  [3]: http://code.google.com/p/sexy-combo
- [4]: http://github.com/nowhereman/jquery.combo.js/examples/index.html
+ [4]: http://help.github.com
  [5]: http://github.com/nowhereman/jquery.combo.js/archives/master
  [6]: http://github.com/nowhereman/jquery.combo.js/issues
 
