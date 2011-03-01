@@ -117,7 +117,7 @@
         jQuery.extend(defaultConf, config);
 
         this.each(function() {
-            var el = new $sc(this, defaultConf);
+            var el = new $cb(this, defaultConf);
             jQuery(this).data("combo", el);
         });
 
@@ -198,11 +198,11 @@
     };
 
     //shortcuts
-    $sc = $.combo;
-    $sc.fn = $sc.prototype = {};
-    $sc.fn.extend = $sc.extend = $.extend;
+    $cb = $.combo;
+    $cb.fn = $cb.prototype = {};
+    $cb.fn.extend = $cb.extend = $.extend;
 
-    $sc.fn.extend({
+    $cb.fn.extend({
         //TOC of our plugin
         //initializes all event listeners
         //it would be more correct to call it initEvents
@@ -272,14 +272,14 @@
                 self.keyPress(e);
             })
             .bind("keypress", function(e) {
-                if ($sc.KEY.RETURN == e.keyCode) {
+                if ($cb.KEY.RETURN == e.keyCode) {
                     e.preventDefault();
                 }
-                if ($sc.KEY.SHIFT == e.keyCode) {
+                if ($cb.KEY.SHIFT == e.keyCode) {
                     e.preventDefault();
                 }
 
-                if ($sc.KEY.TAB == e.keyCode) {
+                if ($cb.KEY.TAB == e.keyCode) {
                     if (self.listVisible()) {
                         e.preventDefault();
                     }
@@ -332,7 +332,7 @@
                 vals.push($.trim(tmpVals[i]));
             }
 
-            vals = $sc.normalizeArray(vals);
+            vals = $cb.normalizeArray(vals);
             return vals;
         },
 
@@ -461,7 +461,7 @@
         //highlights active item of the dropdown list
         highlight: function(activeItem, force) {
             //Prevent mouse noising
-            if (!force && (($sc.KEY.DOWN == this.lastKey) || ($sc.KEY.UP == this.lastKey) || ($sc.KEY.TAB == this.lastKey)))
+            if (!force && (($cb.KEY.DOWN == this.lastKey) || ($cb.KEY.UP == this.lastKey) || ($cb.KEY.TAB == this.lastKey)))
                 return;
 
             if(!force){
@@ -522,7 +522,7 @@
                 if (pop)
                     v.pop();
                 v.push($.trim(val));
-                v = $sc.normalizeArray(v);
+                v = $cb.normalizeArray(v);
                 v = v.join(this.config.separator) + this.config.separator;
 
             }
@@ -898,7 +898,7 @@
         },
 
         keyPress: function(e) {
-            var k = $sc.KEY;
+            var k = $cb.KEY;
             var KEYDOWN = e.type == "keydown";
             var KEYUP = e.type == "keyup";
             if (KEYDOWN) {
@@ -1188,7 +1188,7 @@
 
         //autofill stuff
         autoFill: function() {
-            if (!this.config.autoFill || ($sc.KEY.BACKSPACE == this.lastKey) || this.multiple)
+            if (!this.config.autoFill || $cb.KEY.BACKSPACE == this.lastKey || this.multiple || this.input.val() == this.config.emptyText)
                 return;
 
             var curVal = this.input.val();
@@ -1276,7 +1276,7 @@
         }
     });
 
-    $sc.extend({
+    $cb.extend({
         //key codes
         //from jCarousel
         KEY: {
@@ -1359,13 +1359,13 @@
                     delete config.url;
                     delete config.ajaxData;
                     config.data = data;
-                    return $sc.create(config);
+                    return $cb.create(config);
                 });
             }
 
             config.container = $(config.container);
 
-            var selectbox = $sc.createSelectbox(config);
+            var selectbox = $cb.createSelectbox(config);
 
             return new $(selectbox).combo(config);
 
