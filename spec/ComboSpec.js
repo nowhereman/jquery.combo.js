@@ -20,14 +20,14 @@ describe("Ensure that a select box become a combo box.", function() {
         });
 
         it("should have an input text", function() {
-            input=$('#basic-combo').combo().input;
+            input = $('#basic-combo').combo().input;
 
             expect(input).toBe("div.combo input[type=text]");
 
         });
 
         it("should have an hidden container", function() {
-            listWrapper=$('#basic-combo').combo().listWrapper;
+            listWrapper = $('#basic-combo').combo().listWrapper;
 
             expect(listWrapper).toHaveClass("invisible list-wrapper");
             expect(listWrapper).not.toBeVisible();
@@ -37,7 +37,7 @@ describe("Ensure that a select box become a combo box.", function() {
 
         it("should have an hidden unordered list inside the container", function() {
             expect(listWrapper).toContain("ul");
-            list=$('#basic-combo').combo().list;
+            list = $('#basic-combo').combo().list;
 
             expect(list).toBe("div.combo div.list-wrapper:first ul:first");
             expect(list).not.toBeVisible();
@@ -45,7 +45,7 @@ describe("Ensure that a select box become a combo box.", function() {
 
         it("should have hidden list items inside the unordered list", function() {
             expect(list).toContain("li");
-            listItems=$('#basic-combo').combo().listItems;
+            listItems = $('#basic-combo').combo().listItems;
 
             expect(listItems).toBe("div.combo div.list-wrapper:first ul:first li");
             expect(listItems).not.toBeVisible();
@@ -69,7 +69,7 @@ describe("Ensure that a select box become a combo box.", function() {
             comboWithOptions = $("#combo-with-options").combo({
                 emptyText: inputValue
             });
-            input=$('#combo-with-options').combo().input;
+            input = $('#combo-with-options').combo().input;
             iconButton = $('#combo-with-options').combo().icon;
 
             //                expect(input).toBe("div.combo input[type=text]");
