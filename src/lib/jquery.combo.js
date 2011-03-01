@@ -1330,7 +1330,7 @@
                 return $.getJSON(config.url, config.ajaxData, function(data) {
                     delete config.url;
                     delete config.ajaxData;
-                    config.data = data;
+                    config.data = data || [];
                     return $cb.create(config);
                 });
             }
