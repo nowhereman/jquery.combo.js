@@ -291,7 +291,23 @@
                 fn: function(e){
                     self.keyPress(e);
                 }
-             });
+            })
+            .eventDelay({
+                delay: self.config.keyPressDelay,
+                event: 'paste',
+                fn: function(e){
+                    self.keyPress(e);
+                }
+            })
+            .eventDelay({
+                delay: self.config.keyPressDelay,
+                event: 'drop',
+                fn: function(e){                    
+                    self.keyPress(e);                    
+                }
+            })
+           ;
+
 
             this.triggerSelected();
             this.applyEmptyText();
@@ -903,6 +919,9 @@
             var k = $cb.KEY;
             var KEYDOWN = e.type == "keydown";
             var KEYUP = e.type == "keyup";
+            var DROP = e.type == "drop";
+            var PASTE = e.type == "paste";
+
             if (KEYDOWN) {
                 this.lastKey = e.keyCode;
             }
@@ -977,10 +996,10 @@
                     // }
                     break;
                 default:
-                    if (KEYUP) {
+                    if (KEYUP || DROP || PASTE) {
                         if (this.config.lastTextValue != this.input.val()) {
                             this.inputChanged();
-                        } else if (!this.listVisible()) {
+                        } else if (!this.listVisible() && KEYUP) {
                             this.showList();
                         }
                     }

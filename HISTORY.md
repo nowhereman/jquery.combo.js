@@ -23,7 +23,8 @@
 *    (x) IE6 Support is back
 *    (x) Multiple selectBox
 
-## Bugs Fix
+## Issues
+*    (x) (P1) Paste text with right/middle-click or drop text doesn't show the combobox list
 *    (x) (P1) In IE optgroup aren't well display when the list is filtering
 *    (x) (P2) Optgroups aren't well sorting
 
@@ -52,3 +53,4 @@
 *    (-)(P4) Support tabindex (see: [Vladimir's blog post][1])
 
  [1]: http://vladimir-k.blogspot.com/2009/02/sexy-combo-jquery-plugin.html#c6153987793330399595
+
