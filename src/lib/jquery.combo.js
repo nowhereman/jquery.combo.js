@@ -817,8 +817,19 @@
                 // }
             }
             this.notify("restoreListItems");
-        }
-        ,
+        },
+
+        //remove the combobox and the selectbox
+        remove: function(){
+            this.wrapper.remove();
+        },
+
+        //remove the combobox and restore the selectbox
+        destroy: function(){
+            var $selectbox = this.selectbox.clone();
+            this.wrapper.parent().append($selectbox.show());
+            this.wrapper.remove();
+        },
 
         //apply formatting options on text
         formatText: function(val){
@@ -1184,7 +1195,6 @@
             this.input.val(newVal);
             this.selection(this.input.get(0), curVal.length, newVal.length);
 
-
         },
 
         //provides selection for autofilling
@@ -1343,4 +1353,3 @@
         }
     });
 })(jQuery);
-
