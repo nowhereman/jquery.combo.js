@@ -79,7 +79,7 @@ describe("Ensure that a select box become a combo box.", function() {
 
             runs(function () {
                 iconButton.trigger("click");
-                expect(input).haveFocus();
+                expect(input).toHaveFocus();
                 expect(input).not.toHaveValue();
             });
 
@@ -87,17 +87,12 @@ describe("Ensure that a select box become a combo box.", function() {
                 $(document).trigger("mouseup");
             });
 
-
             expect(input).toHaveValue(inputValue);
             expect(input).not.toHaveValue(inputValue + "invalid value");
             expect(input.val()).not.toBeEmpty();
-
         });
 
 
     });
 
-
-
 });
-
