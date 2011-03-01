@@ -64,6 +64,17 @@ describe("Ensure that a select box become a combo box.", function() {
 
         });
 
+        afterEach(function(){
+            // Removing the combobox and the selectbox
+            expect($("select#combo-with-options")).toExist();
+            expect($("select#combo-with-options")).toHaveData("combo");
+            $("select#combo-with-options").combo().remove();
+//            $("select#combo-with-options").combo().destroy();
+//            expect($("select#combo-with-options")).not.toHaveData("combo");
+//            expect($("select#combo-with-options")).toExist();
+            expect($("select#combo-with-options")).not.toExist();
+        });
+
         it("should have an empty text like 'Choose an option...' when 'emptyText' option is set", function() {
             var inputValue = "Choose an option...";
             comboWithOptions = $("#combo-with-options").combo({
