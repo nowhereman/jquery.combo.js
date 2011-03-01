@@ -1,4 +1,33 @@
 beforeEach(function() {
+
+    // Helpers
+
+        // Provides selection of an element value
+        // Borrowed from jCarousel
+        var selection = function(element, start, end) {
+            element.focus();
+            var field = element.get(0);
+            if(field.createTextRange) {
+                var selRange = field.createTextRange();
+                selRange.collapse(true);
+                selRange.moveStart("character", start);
+                selRange.moveEnd("character", end);
+                selRange.select();
+            } else if(field.setSelectionRange) {
+                field.setSelectionRange(start, end);
+            } else {
+                if(field.selectionStart) {
+                    field.selectionStart = start;
+                    field.selectionEnd = end;
+                }
+            }
+        };
+
+        // Confirm the text selection of the given element, move the cursor to the end of the value
+        var confirmSelection = function(element) {
+            selection(element, element.val().length, element.val().length);
+        };
+    
     this.addMatchers({
 
         // Source : http://blogs.developpeur.org/fremycompany/archive/2008/02/14/savoir-quel-input-le-focus-document-activeelement-sous-firefox-et-co.aspx
