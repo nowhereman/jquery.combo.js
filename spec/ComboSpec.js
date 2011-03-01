@@ -5,6 +5,7 @@ describe("Ensure that a select box become a combo box.", function() {
     var listWrapper;
     var list;
     var listItems;
+    var config;
 
     describe("A basic combo box", function() {
         var basicSelect;
@@ -102,7 +103,54 @@ describe("Ensure that a select box become a combo box.", function() {
             expect(input).not.toHaveValue(inputValue + "invalid value");
             expect(input.val()).not.toBeEmpty();
         });
+        
+        it("should have autofilled text with the first item of the dropdown list when 'autoFill' option is set to true", function() {
+            var inputValue = "Ala";
+            var newValue = "Alabama";
+            
+            var regex = new RegExp(inputValue, "i");
+            var filledValue = newValue.replace(regex,'');
+            
+            comboWithOptions = $("#combo-with-options").combo({
+                autoFill: true
+            });
+            
+            input = $('#combo-with-options').combo().input;
+            listItems = $('#combo-with-options').combo().listItems;
+            config = $('#combo-with-options').combo().config;
+            iconButton = $('#combo-with-options').combo().icon;
 
+            runs(function () {
+                // Delete input value, char by char
+                expect(input).toDeleteText();
+                // Simulate typing in input value, char by char
+                expect(input).toTypeText(inputValue);                
+            });
+
+            waits(config.keyPressDelay + 10);
+            
+            runs(function () {
+                expect(input).toHaveValue(newValue);
+                expect(input).not.toHaveValue(inputValue);
+                expect(input.val()).not.toBeEmpty();
+                expect(input).toHaveSelectedText(filledValue);
+            });            
+            
+            runs(function () {
+                // Select the first item of the combobox
+//                listItems.filter("li.visible:first").trigger("mouseup"); // Similar to the Return key stuff
+
+                // Press the Return key to select the first item of the combobox
+                e = jQuery.Event ('keydown');
+                e.keyCode = $cb.KEY.RETURN; // 'Return' keyCode
+                input.trigger(e);
+
+                expect(input).not.toHaveSelectedText(filledValue);
+                expect(input).not.toHaveSelectedText(newValue);
+                expect(input).toHaveSelectedText(); // Empty selected text
+            });           
+            
+        });
 
     });
 

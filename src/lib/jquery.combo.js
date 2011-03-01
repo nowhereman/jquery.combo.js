@@ -592,6 +592,9 @@
 
         listItemClick: function(item) {
             this.setComboValue(item.text(), true, true);
+            if(this.config.autoFill && !this.multiple) {
+                this.confirmSelection(this.input.get(0));
+            }
             this.inputFocus();
         },
 
