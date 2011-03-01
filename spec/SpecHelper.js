@@ -62,7 +62,73 @@ beforeEach(function() {
                 return !!(el.selectionStart||el.selectionEnd);
             } catch (ex) {}
             return false;
+        },
+
+        // Check if the current element have the expected selected text
+        toHaveSelectedText: function(text) {
+            var selectedText = '';
+            if(!text || text.length == 0) {
+                text = selectedText;
+            }
+            if(this.actual) {
+                var el = this.actual.get(0);
+                if (document.selection) {
+                    el.focus();
+                    var sel = document.selection.createRange();
+                    selectedText = sel.text;
+                } else if (el.selectionStart || el.selectionStart == '0') {
+                    var startPos = el.selectionStart;
+                    var endPos = el.selectionEnd;
+                    selectedText = this.actual.val().substring(startPos, endPos);
+                }
+            } else {
+                if (window.getSelection) {
+                    selectedText = window.getSelection();
+                } else if (document.getSelection) {
+                    selectedText = document.getSelection();
+                } else if (document.selection) {
+                    selectedText = document.selection.createRange().text;
+                }
+            }
+
+            return selectedText == text;
+        },
+
+        // Unselect the selected text if any. Then, simulate typing inside the current element, char by char.
+        toTypeText: function(expectedValue, eventType) {
+            if(!eventType)
+                eventType = 'keyup'; // Possible values : keypress, keydown and keyup.
+            confirmSelection(this.actual);
+            // Simulate typing inside the element, char by char
+            for(var i = 0; i < expectedValue.length; i++) {
+                this.actual.val(this.actual.val() + expectedValue.charAt(i));
+                e = jQuery.Event(eventType);
+                e.keyCode =  expectedValue.charCodeAt(i);
+                this.actual.trigger(e);
+            }
+
+            return this.actual.val() === expectedValue;
+        },
+
+        // Unselect the selected text if any. Then, erasing the value of the element, char by char.
+        toDeleteText: function(which, eventType) {
+            if(!which)
+                which = 8; // BackSpace keyCode
+            if(!eventType)
+                eventType = 'keypress'; // Possible values : keypress, keydown and keyup.
+            confirmSelection(this.actual);
+            // Erasing the value of the element, char by char
+            for(var i = this.actual.val().length-1; i >= 0; i--) {
+                this.actual.val(this.actual.val().slice(0,-1));
+                e = jQuery.Event(eventType);
+                e.keyCode =  which;
+
+                this.actual.trigger(e);
+            }
+
+            return this.actual.val().length === 0;
         }
+
     /*
     toBeVisible: function() {
       // Fix the toBeVisible matcher
