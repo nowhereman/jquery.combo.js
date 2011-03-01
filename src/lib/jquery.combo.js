@@ -187,7 +187,7 @@
         this.lastPageY = null;
 
         // this.overflowCSS = ($.browser.opera) ? "overflow" : "overflowY";
-        this.overflowCSS = "overflowY"; //tested successfully with Opera 9.6 and 10
+        this.overflowCSS = "overflowY"; // Tested successfully with Opera 9.6 and 10
         this.setListMaxHeight();
 
         this.multiple = this.selectbox.attr("multiple");
@@ -210,7 +210,7 @@
             var self = this;
 
             //Refresh ListItems
-            //TODO make the interval seconds as an option variable
+            //TODO make the interval seconds as a config option
             setInterval(function(){
                 if(self.selectbox.get(0).length != self.selectLen)
                     self.refreshListItems();
@@ -236,14 +236,14 @@
                 if ($(e.target).hasClass("li-bold")) {
                     return $(e.target).parent('li').trigger('mouseover');
                 }
-                if (e.target.tagName=='LI') {
+                if (e.target.tagName == 'LI') {
                     var target = $(e.target);
                     // console.debug( Math.abs(self.lastPageY - e.pageY) + " > " + target.height()*1.25);//debug
                     if ( Math.abs(self.lastPageY - e.pageY) > target.height()*1.25 ) {
                         self.lastKey = null;
                         self.lastPageY = null;
                     }
-                    if(self.lastKey==null){
+                    if(self.lastKey == null){
                         self.lastPageY = e.pageY;
                     }
 
@@ -256,7 +256,7 @@
                 if ($(e.target).hasClass("li-bold")) {
                     return $(e.target).parent('li').trigger('mouseup');
                 }
-                if (e.target.tagName=='LI') {
+                if (e.target.tagName == 'LI') {
                     self.listItemClick($(e.target));
                 } else {
                     e.stopPropagation();
@@ -286,9 +286,9 @@
                 }
             })
             .eventDelay({
-               delay: self.config.keyPressDelay,
-               event: 'keyup',
-               fn: function(e){
+                delay: self.config.keyPressDelay,
+                event: 'keyup',
+                fn: function(e){
                     self.keyPress(e);
                 }
              });
@@ -367,7 +367,7 @@
             if(!showMode) {
                 showMode = this.config.showAllMode;
             }
-            if (!showMode && this.list.find(".visible").length==0) {
+            if (!showMode && this.list.find(".visible").length == 0) {
                 return;
             }
             this.config.showMode = showMode;
@@ -470,21 +470,9 @@
             }
             //console.debug("highlight item!");//debug
 
-            if(this.listItems.not("li.selected").filter("li.active").length==0)
+            if(this.listItems.not("li.selected").filter("li.active").length == 0)
                 this.list.find("li.selected").addClass("active");
 
-        },
-
-        //update highlightTerm config option
-        setHighlightTerm: function(val) {
-            /*if(val==false)
-                this.clearHighlightTerms();*/
-            this.config.highlightTerm=val;
-        },
-
-        //update keyPressDelay config option
-        setKeyPressDelay: function(val) {
-            this.config.keyPressDelay=val;
         },
 
         highlightTermFn: function(term) {
@@ -548,7 +536,7 @@
                     var self=this;
                     $(this.getHiddenValue()).each(function(i,v){
                         self.options.each(function(){
-                            if($(this).val()==v)
+                            if($(this).val() == v)
                                 $(this).attr("selected","selected");
                         });
                     });
@@ -704,7 +692,7 @@
             }
 
             this.options.each(function(i) {
-                //if(i==0)
+                //if(i == 0)
                 //    console.debug("create option!");//debug
                 var optionText = $.trim($(this).text());
                 var parent=self.list;
@@ -713,7 +701,7 @@
 
                     var groups=parent.find("span").filter(function(){
                         var $this=$(this);
-                        if($this.text()==optGroup.attr('label'))
+                        if($this.text() == optGroup.attr('label'))
                         {
                             parent=$this.parent("ul");
                             return $this;
@@ -811,7 +799,7 @@
 
             this.listItems =  this.list.find("*");
 
-            if(type=="all") {
+            if(type == "all") {
                 this.listItems.removeClass("active");
                 var activeItem=this.list.find("li").eq(activeIndex);
 
@@ -962,7 +950,7 @@
                 case k.TAB:
                     if (KEYDOWN) {
                         if (this.listVisible()) {
-                            if(e.shiftKey==true) {
+                            if(e.shiftKey == true) {
                                 this.highlightPrev();
                             } else {
                                 this.highlightNext();
@@ -1089,7 +1077,7 @@
             var el=$("li:contains('" + this.getActive().text() + "')",cacheList);
             console.debug(cacheList.index(el));
             return cacheList.find("li").map(function(i){
-                if(self.getActive().text()==$(this).text()){
+                if(self.getActive().text() == $(this).text()){
                     console.debug("Index: " + i);
                     return i;
                 }
@@ -1219,7 +1207,7 @@
         // field.focus();
         },
 
-        //  Confirm the text selection of the given field
+        // Confirm the text selection of the given field
         confirmSelection: function(field) {
             this.selection(field, this.getTextValue().length, this.getTextValue().length);
         },
@@ -1238,35 +1226,6 @@
             this.config.dropUp = drop;
             this.updateDrop();
         },
-
-        //update liquidFilter config option
-        setLiquidFilter: function(val) {
-            this.config.liquidFilter = val;
-        },
-
-        //update accentsSensitive config option
-        setAccentsSensitive: function(val) {
-            this.config.accentsSensitive = val;
-        },
-
-        //convert accents characters into non-accents characters
-        // removeAccents: function(str) {
-            // var withAccents = "��������������������������������������������������������������";
-            // var withoutAccents = "YuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy";
-
-            // var out = "";
-
-            // for(var i = 0; i < str.length; i++) {
-                // var chr = str.charAt(i);
-                // var indexOf = withAccents.indexOf(chr);
-                // if (indexOf != -1) {
-                    // out += withoutAccents.charAt(indexOf);
-                // } else {
-                    // out += chr;
-                // }
-            // }
-            // return out;
-        // },
 
         notify: function(evt) {
             if (!$.isFunction(this.config[evt + "Callback"]))
