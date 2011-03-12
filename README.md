@@ -21,7 +21,7 @@ Please follow these instructions to install Comb'O:
 
 2.  Include jQuery and plugin files to your web page:
 
-    `<script type="text/javascript" src="path_to_plugin/lib/jquery-1.4.4.js"></script>`
+    `<script type="text/javascript" src="path_to_plugin/lib/jquery-1.5.1.js"></script>`
 
     `<script type="text/javascript" src="path_to_plugin/lib/jquery.eventdelay.js"></script>`
 
