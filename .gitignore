@@ -4,6 +4,7 @@ examples/heavy.*
 src/lib/jquery-1.3.2.js
 src/lib/jquery-1.4.2.js
 src/lib/jquery-1.4.3.js
+src/lib/jquery-1.4.4.js
 *~
 *.swp
 
