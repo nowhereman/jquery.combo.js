@@ -24,7 +24,7 @@
     $.fn.combo = function(config) {
 
         // Check if Comb'O is already activated
-        var api = jQuery(this).eq(typeof conf == 'number' ? conf : 0).data("combo");
+        var api = $(this).eq(typeof conf == 'number' ? conf : 0).data("combo");
         if(api) return api;
 
         //default config options
@@ -44,6 +44,12 @@
 
             //if provided, will be the value of the text input when it has no value and focus
             emptyText: "",
+
+            //this suffix will be appended to the lazy selectbox's name
+            lazySuffix: "__lazy",
+
+            //if true, don't parse the selectbox options until combobox get the focus
+            lazyLoading: false,
 
             //if true, autofilling will be enabled
             autoFill: false,
@@ -114,11 +120,39 @@
             //called when text input's value is changed
             textChangeCallback: null
         };
-        jQuery.extend(defaultConf, config);
+        $.extend(defaultConf, config);
 
         this.each(function() {
-            var el = new $cb(this, defaultConf);
-            jQuery(this).data("combo", el);
+            var selectbox = $(this);
+            var regex = new RegExp("^(.+)" + defaultConf.lazySuffix + "$", "i");            
+            if (!selectbox.attr("id").match(regex) && defaultConf.lazyLoading) {
+                
+                selectbox.hide();
+                var optionSelected = selectbox.find("option:selected:first");
+                var data = [];
+                if (optionSelected)
+                    data.push({value: optionSelected.val(), text: optionSelected.text()});
+
+                $.extend(defaultConf, {
+                    name: selectbox.attr('name'),
+                    id: selectbox.attr('id'),
+                    container: selectbox.parent(),
+                    data: data});
+                $cb.create(defaultConf);
+            } else {
+                var el = new $cb(this, defaultConf);
+                selectbox.data("combo", el);
+
+                if (el.config.lazyLoading) {                    
+                    var targetSelectbox = $("#" + selectbox.attr("id").replace(regex, "$1"));
+                    targetSelectbox.data('combo', el);
+                    var $selectbox = targetSelectbox.clone();
+                    $selectbox.data('combo', el);
+                    el.wrapper.prepend($selectbox);
+                    targetSelectbox.remove();
+                }
+            }
+            
         });
 
     };
@@ -132,11 +166,23 @@
             return;
 
 
-     this.config = ( config || {});
+        this.config = ( config || {});
+
+
         this.selectbox = $(selectbox);
         this.selectLen= this.selectbox.get(0).length;
 
         this.options = this.selectbox.find("option");
+
+        if (config.lazyLoading) {
+            var regex = new RegExp("^(.+)" + this.config.lazySuffix + "$", "i");
+            this.config.name = this.selectbox.attr("name").replace(regex, "$1");
+            this.config.id = this.selectbox.attr("id").replace(regex, "$1");
+//            console.debug(this.config.lazySuffix + ":" + this.config.name + "/" + this.config.id);//debug
+        } else {
+            this.config.name = this.selectbox.attr("name");
+            this.config.id = this.selectbox.attr("id");
+        }
 
         this.wrapper = this.selectbox.wrap("<div>").
         hide().
@@ -147,7 +193,7 @@
         this.input = $("<input type='text'></input>").
         appendTo(this.wrapper).
         attr("autocomplete", "off").
-        attr("name", this.selectbox.attr("name") + this.config.suffix).
+        attr("name", this.config.name + this.config.suffix).
         val("");
 
         this.inputOffset = this.input.offset();
@@ -155,7 +201,7 @@
         this.hidden = $("<input type='hidden'></input>").
         appendTo(this.wrapper).
         attr("autocomplete", "off").
-        attr("name", this.selectbox.attr("name") + this.config.hiddenSuffix).
+        attr("name", this.config.name + this.config.hiddenSuffix).
         val(this.config.initialHiddenValue);
 
         this.icon = $("<div></div>").
@@ -302,12 +348,14 @@
             .eventDelay({
                 delay: self.config.keyPressDelay,
                 event: 'drop',
-                fn: function(e){                    
-                    self.keyPress(e);                    
+                fn: function(e){
+                    self.keyPress(e);
                 }
-            })
-           ;
+            });
 
+            this.wrapper.focusin(function() {
+                self.loadListItems();
+            });
 
             this.triggerSelected();
             this.applyEmptyText();
@@ -361,6 +409,8 @@
 
         //icon click event listener
         iconClick: function() {
+            this.loadListItems();
+
             if (this.listVisible()) {
                 this.hideList();
             } else {
@@ -760,6 +810,20 @@
             }
         },
 
+        // Lazy loading related
+        loadListItems: function(){
+            if (this.config.lazyLoading) {
+                this.config.lazyLoading = false;
+                var lazySelectBox = this.selectbox;
+                var regex = new RegExp("^(.+)" + this.config.lazySuffix + "$", "i");
+                this.selectbox = $("#" + this.selectbox.attr("id").replace(regex, "$1"));
+                this.refreshListItems();
+                // Remove the lazy select element
+                lazySelectBox.remove();
+            }
+//            console.debug(this.config.lazyLoading);//debug
+         },
+
         refreshListItems: function(){
             this.selectLen=this.selectbox.get(0).length;
             this.options = this.selectbox.find("option");//refresh selectBox options
@@ -845,7 +909,13 @@
 
         //remove the combobox and restore the selectbox
         destroy: function(){
-            var $selectbox = this.selectbox.clone();
+            var $selectbox;
+            if(this.config.lazyLoading) {
+              var regex = new RegExp("^(.+)" + this.config.lazySuffix + "$", "i");
+              $selectbox = $("#" + this.selectbox.attr("id").replace(regex, "$1")).clone();
+            } else
+                $selectbox = this.selectbox.clone();
+            
             this.wrapper.parent().append($selectbox.show());
             this.wrapper.remove();
         },
@@ -1291,6 +1361,11 @@
         },
 
         createSelectbox: function(config) {
+            if (config.lazyLoading) {
+                var lazySuffix = "__lazy"; // TODO DRY already set in defaultConf
+                config.name += lazySuffix;
+                config.id += lazySuffix;
+            }
             var $selectbox = $("<select></select>").
             appendTo(config.container).
             attr({
@@ -1357,7 +1432,6 @@
             config.container = $(config.container);
 
             var selectbox = $cb.createSelectbox(config);
-
             return new $(selectbox).combo(config);
 
         },
@@ -1375,3 +1449,4 @@
         }
     });
 })(jQuery);
+
