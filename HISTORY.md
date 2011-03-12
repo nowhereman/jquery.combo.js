@@ -16,6 +16,7 @@
 *    (x) Selected Item
 *    (x) Restore Active(s) or Selected Item(s) position
 *    (x) Updating config options when plugin is already create e.g: `$("#my-combo").data("combo").setHighlightTerm(true);`
+*    (x) Lazy loading system to improve performances, e.g: `$("#my-select").combo({lazyLoading: true});`
 
 ## Enhancements
 *    (x) Better Item Highlighting with mouse
